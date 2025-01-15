@@ -1,0 +1,48 @@
+#include<bits/stdc++.h>
+using namespace std;
+int adj[100][100];
+
+
+int main()
+{
+    int n;
+    cout << "enter the number of nodes : ";
+    cin >> n;
+
+    cout << "if the given nodes are connected with edge then enter 1, otherwise 0\n";
+    for(int i=1 ; i<=n ; i++)
+    {
+        for(int j=1 ; j<=n ; j++)
+        {
+            cout << i << " ---> " << j << " : ";
+            cin >> adj[i][j];
+        }
+    }
+
+    for(int i=1 ; i<=n ; i++)
+    {
+        for(int j=1 ; j<=n ; j++)
+        {
+            cout << adj[i][j] << ' ';
+        }
+        cout << endl;
+    }
+}
+
+/*
+output:
+enter the number of nodes : 3
+if the given nodes are connected with edge then enter 1, otherwise 0
+1 ---> 1 : 0
+1 ---> 2 : 1
+1 ---> 3 : 0
+2 ---> 1 : 1
+2 ---> 2 : 0
+2 ---> 3 : 0
+3 ---> 1 : 1
+3 ---> 2 : 0
+3 ---> 3 : 0
+0 1 0
+1 0 0
+1 0 0
+*/
