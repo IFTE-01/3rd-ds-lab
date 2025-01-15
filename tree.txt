@@ -1,0 +1,157 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int Swap(int &a, int &b)
+{
+    int temp = a;
+    a = b;
+    b = temp;
+}
+
+class node
+{
+public:
+    int value;
+    node* left_link;
+    node* right_link;
+};
+node* head = 0;
+
+void add(int val)
+{
+    if(head==0)
+    {
+        head = (node*)malloc(sizeof(node));
+        head->value = val;
+        head->left_link = 0;
+        head->right_link = 0;
+    }
+    else
+    {
+        node* p = head; // for travel...
+
+        node* temp = (node*)malloc(sizeof(node)); // for new node...
+        temp->value = val;
+        temp->left_link = 0;
+        temp->right_link = 0;
+
+        while(1)
+        {
+            if(p->left_link==0)
+            {
+                p->left_link = temp;
+                break;
+            }
+            if(p->right_link==0)
+            {
+                p->right_link = temp;
+                break;
+            }
+            if(val<p->value) p = p->left_link;
+            else p = p->right_link;
+        }
+    }
+}
+
+void inOrder(node* p)
+{
+    if(head==0) cout << "empty\n";
+    if(p==0) return;
+    inOrder(p->left_link);
+    cout << p->value << ' ';
+    inOrder(p->right_link);
+}
+
+void preOrder(node* p)
+{
+    if(head==0) cout << "empty\n";
+    if(p==0) return;
+    cout << p->value << ' ';
+    preOrder(p->left_link);
+    preOrder(p->right_link);
+}
+
+void postOrder(node* p)
+{
+    if(head==0) cout << "empty\n";
+    if(p==0) return;
+    postOrder(p->left_link);
+    postOrder(p->right_link);
+    cout << p->value << ' ';
+}
+
+void Search(int val)
+{
+    node* p = head;
+    int flag = 0;
+    while(p)
+    {
+        if(p->value==val)
+        {
+            flag++;
+            break;
+        }
+        if(val < p->value) p = p->left_link;
+        else p = p->right_link;
+    }
+    if(flag) cout << "found\n";
+    else cout << "not found\n";
+}
+
+int main()
+{
+    while(1)
+    {
+        cout << "1. add elements\n";
+        cout << "2. search\n";
+        cout << "3. in order\n";
+        cout << "4. pre order\n";
+        cout << "5. post order\n";
+
+
+        cout << "select number : ";
+        string s;
+        cin >> s;
+        if(s=="1")
+        {
+            cout << "how many number : ";
+            int n; cin >> n;
+            while(n--)
+            {
+                cout << "value : ";
+                int x;
+                cin >> x;
+                add(x);
+            }
+            cout << "\n---------------------------------\n";
+        }
+        else if(s=="2")
+        {
+            cout << "target : ";
+            int x;
+            cin >> x;
+            Search(x);
+            cout << "\n---------------------------------\n";
+        }
+        else if(s=="3")
+        {
+            inOrder(head);
+            cout << "\n---------------------------------\n";
+        }
+        else if(s=="4")
+        {
+            preOrder(head);
+            cout << "\n---------------------------------\n";
+        }
+        else if(s=="5")
+        {
+            postOrder(head);
+            cout << "\n---------------------------------\n";
+        }
+        else cout << "Enter valid number\n";
+    }
+}
+
+/*
+output:
+*/

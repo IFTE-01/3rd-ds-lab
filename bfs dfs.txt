@@ -1,0 +1,161 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int sz;
+int a[1000];
+int Swap(int &a, int &b)
+{
+    int temp = a;
+    a = b;
+    b = temp;
+}
+
+int Front = 0;
+int Rear = 0;
+
+void Insert(int val)
+{
+    if(Rear+1==Front) cout << "overflow\n";   ///***
+    else if(Rear==sz and Front==1) cout << "overflow..\n"; ///***
+    else if(Rear==sz)
+    {
+        Rear = 1;
+        a[Rear] = val;
+    }
+    else
+    {
+        if(Rear==0) ///***
+        {
+            Rear = 1;
+            Front = 1;
+        }
+        else Rear++;
+        a[Rear] = val;
+    }
+}
+
+void Pop()
+{
+    if(Front==0 and Rear==0) cout << "underflow\n";   ///***
+    else
+    {
+        if(Front==Rear)   ///***
+        {
+            Front= 0;
+            Rear = 0;
+        }
+        else
+        {
+            if(Front==sz) Front = 1;   ///***
+            else Front++;
+        }
+    }
+}
+
+int top()
+{
+    if(Rear==0) return -1;   ///***(empty array)
+    else return a[Front];
+}
+
+int vis[1000];
+int adj[1000][1000];
+
+void dfs(int n)
+{
+    vis[n] = 1;
+    cout << n << " -> ";
+    for(int i=1 ; i<100 ; i++)
+    {
+        if(adj[n][i] and vis[i]==0) dfs(i);
+    }
+}
+
+
+
+void bfs(int n)
+{
+    int s = n;
+    Insert(n);
+    while(top()!=-1)
+    {
+        s = top();
+        vis[s]=1;
+        Pop();
+        cout << s << " -> ";
+        for(int i=0 ; i<100 ; i++)
+        {
+            if(adj[s][i] and vis[i]==0)
+            {
+                Insert(i);
+            }
+        }
+    }
+}
+
+int main()
+{
+    int n;
+    cout << "enter the number of edge : ";
+    cin >> n;
+    sz = 500;
+    for(int i=0 ; i<n ; i++)
+    {
+        int x,y;
+        cout << "2 connected node : ";
+        cin >> x >> y;
+        adj[x][y]++;
+        adj[y][x]++;
+    }
+
+    while(1)
+    {
+
+        cout << "1. BFS\n";
+        cout << "2. DFS\n";
+        cout << "Select : ";
+        int x;
+        cin >> x;
+
+        if(x==1)
+        {
+            cout << "enter node : ";
+            int node;
+            cin >> node;
+            bfs(node);
+            cout << endl;
+            for(int i=0 ; i<1000 ; i++) vis[i]=0;
+        }
+        else
+        {
+            cout << "enter node : ";
+            int node;
+            cin >> node;
+            dfs(node);
+            cout << endl;
+            for(int i=0 ; i<1000 ; i++) vis[i]=0;
+        }
+    }
+}
+
+/*
+output:
+enter the number of edge : 4
+2 connected node : 1 2
+2 connected node : 1 4
+2 connected node : 2 3
+2 connected node : 2 5
+1. BFS
+2. DFS
+Select : 2
+enter node : 1
+1 -> 2 -> 3 -> 5 -> 4 ->
+1. BFS
+2. DFS
+Select : 1
+enter node : 1
+1 -> 2 -> 4 -> 3 -> 5 ->
+1. BFS
+2. DFS
+Select :
+*/

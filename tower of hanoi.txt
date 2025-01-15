@@ -1,0 +1,60 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int TotalMove = 0;
+int Swap(int &a, int &b)
+{
+    int temp = a;
+    a = b;
+    b = temp;
+}
+
+void TowerOfHanoi(int disk , char start , char mid , char last)
+{
+    if(disk==1)
+    {
+        cout << start << " -> " << last << endl;
+        TotalMove++;
+    }
+    else if(disk)
+    {
+        TowerOfHanoi(disk-1,start,last,mid);
+        cout << start << " -> " << last << endl;
+        TowerOfHanoi(disk-1,mid,start,last);
+        TotalMove++;
+    }
+}
+
+int main()
+{
+    int disk;
+    char start = 'A',mid = 'B',last = 'C';
+    
+    cout << "enter dist number : ";
+    cin >> disk;
+    
+    TowerOfHanoi(disk,start,mid,last);
+    cout << "total number of move : " << TotalMove;
+}
+
+
+/*
+output:
+enter dist number : 4
+A -> B
+A -> C
+B -> C
+A -> B
+C -> A
+C -> B
+A -> B
+A -> C
+B -> C
+B -> A
+C -> A
+B -> C
+A -> B
+A -> C
+B -> C
+total number of move : 15
+*/
