@@ -1,0 +1,117 @@
+#include<bits/stdc++.h>
+using namespace std;
+int sz = 100;
+int top = 0;
+int s[1000];
+
+void push(int n)
+{
+    if(top==sz) cout << "overflow\n";
+    else
+    {
+        top++;
+        s[top] = n;
+    }
+}
+
+void pop()
+{
+    if(top==0)cout << "underflow\n";
+    else top--;
+}
+
+void Top()
+{
+    if(top==0) cout << "empty\n";
+    else cout << s[top] << endl;
+}
+
+int main()
+{
+    while(1)
+    {
+        cout << "1. top\n";
+        cout << "2. pop\n";
+        cout << "3. push\n";
+        cout << "select : ";
+        int n;
+        cin >> n;
+
+        if(n==1) Top();
+        else if(n==2) pop();
+        else
+        {
+            cout << "enter value : ";
+            int x;
+            cin >> x;
+            push(x);
+        }
+        cout << "-----------\n";
+    }
+}
+
+/*
+output:
+1. top
+2. pop
+3. push
+select : 1
+empty
+-----------
+1. top
+2. pop
+3. push
+select : 2
+underflow
+-----------
+1. top
+2. pop
+3. push
+select : 3
+enter value : 5
+-----------
+1. top
+2. pop
+3. push
+select : 1
+5
+-----------
+1. top
+2. pop
+3. push
+select : 3
+enter value : 4100
+-----------
+1. top
+2. pop
+3. push
+select : 1
+4100
+-----------
+1. top
+2. pop
+3. push
+select : 2
+-----------
+1. top
+2. pop
+3. push
+select : 1
+5
+-----------
+1. top
+2. pop
+3. push
+select : 2
+-----------
+1. top
+2. pop
+3. push
+select : 1
+empty
+-----------
+1. top
+2. pop
+3. push
+select :
+*/
