@@ -1,0 +1,134 @@
+#include<bits/stdc++.h>
+using namespace std;
+int sz = 100;
+int p_top = 0;
+int q_top = 0;
+char p[1000];
+char q[1000];
+
+void q_push(char n)
+{
+    if(q_top==sz) cout << "overflow\n";
+    else
+    {
+        q_top++;
+        q[q_top] = n;
+    }
+}
+void p_push(char n)
+{
+    if(p_top==sz) cout << "overflow\n";
+    else
+    {
+        p_top++;
+        p[p_top] = n;
+    }
+}
+
+void q_pop()
+{
+    if(q_top==0)cout << "underflow\n";
+    else q_top--;
+}
+void p_pop()
+{
+    if(p_top==0)cout << "underflow\n";
+    else p_top--;
+}
+
+
+
+bool op(char a)
+{
+    if(a=='+' or a=='-' or a=='*' or a=='/' or a=='^') return true;
+    else return false;
+}
+bool ok(char a, char b)
+{
+    ///a is the operator of q
+    ///b is the operator of s...
+
+    char sign[10] = "^/*+-";
+    char power[10] ={ 3 , 2 , 2 , 1 , 1};
+    int a_power,b_power;
+    for(int i=0 ; i<5 ; i++)
+    {
+        if(sign[i]==a)
+        {
+            a_power = power[i];
+            break;
+        }
+    }
+    for(int i=0 ; i<5 ; i++)
+    {
+        if(sign[i]==b)
+        {
+            b_power = power[i];
+            break;
+        }
+    }
+    if(a_power<b_power) return true;
+    else return false;
+}
+int main()
+{
+    char s[1000];
+    cin.getline(s,500);
+    int len = 0;
+    while(s[len]!='\0')
+    {
+        len++;
+    }
+
+    /*
+    NOTE:
+    =====
+    (1) add ')' at the end of string (s)
+    (2) add '(' at stack (q)
+    */
+    s[len]=')'; ///(1)
+    s[len+1] = '\0';
+    q_push('('); ///(2)
+
+    for(int i=0 ; i<=len ; i++)
+    {
+        if(s[i]=='(') q_push('('); /// for left bracket...
+        else if(s[i]==')')  /// for right bracket...
+        {
+            while(q[q_top]!='(')
+            {
+                p_push(q[q_top]);
+                q_pop();
+            }
+
+            q_pop();
+        }
+        else if(op(s[i])) ///for operators...
+        {
+            while(op(q[q_top]) and ok(q[q_top],s[i])==false)
+            {
+                p_push(q[q_top]);
+                q_pop();
+                //break;
+            }
+            q_push(s[i]);
+        }
+        else /// for operant...
+        {
+            p_push(s[i]);
+        }
+        //break;
+
+    }
+
+    cout << "postfix : ";
+    for(int i= 0 ; i<=len ; i++) cout << p[i];
+}
+
+/*
+output:
+a+(b*c-(d/e^f)*g)*h
+postfix : abc*def^/g*-h*+
+*/
+
+
