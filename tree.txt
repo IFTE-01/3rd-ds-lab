@@ -98,6 +98,26 @@ void Search(int val)
     else cout << "not found\n";
 }
 
+void Replace(int val, int target)
+{
+    node* p = head;
+    int flag = 0;
+    while(p)
+    {
+        if(p->value==target)
+        {
+            p->value = val; /// new value...
+            flag++;
+            break;
+        }
+        if(target < p->value) p = p->left_link;
+        else p = p->right_link;
+    }
+    if(flag) cout << "found\n";
+    else cout << "not found\n";
+}
+
+
 int main()
 {
     while(1)
@@ -107,7 +127,7 @@ int main()
         cout << "3. in order\n";
         cout << "4. pre order\n";
         cout << "5. post order\n";
-
+        cout << "6. replace \n";
 
         cout << "select number : ";
         string s;
@@ -147,6 +167,16 @@ int main()
         {
             postOrder(head);
             cout << "\n---------------------------------\n";
+        }
+        else if(s=="6")
+        {
+            cout << "enter target : ";
+            int x;
+            cin >> x;
+            cout << "enter the value : ";
+            int y;
+            cin >> y;
+
         }
         else cout << "Enter valid number\n";
     }
