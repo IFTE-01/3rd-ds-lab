@@ -176,7 +176,7 @@ int main()
             cout << "enter the value : ";
             int y;
             cin >> y;
-
+            Replace(y,x);
         }
         else cout << "Enter valid number\n";
     }
