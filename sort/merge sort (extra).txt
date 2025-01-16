@@ -1,0 +1,80 @@
+#include<bits/stdc++.h>
+using namespace std;
+int a[5] = {3,9,8,2,1};
+
+int Merge(int l , int mid , int r)
+{
+    int l_sz = (mid-l)+1;
+    int r_sz = (r-(mid+1))+1;
+
+    int *left = new int[l_sz];
+    int *right = new int[r_sz];
+
+    for(int i=0 ; i<l_sz ; i++)
+    {
+        left[i]=a[l+i];
+    }
+
+    for(int i=0 ; i<r_sz ; i++)
+    {
+        right[i]=a[(mid+1)+i];
+    }
+
+    int pl = 0;
+    int pr = 0;
+
+    int index = l;
+    while(pl<l_sz && pr<r_sz)
+    {
+        if(left[pl]<=right[pr])
+        {
+            a[index] = left[pl];
+            pl++;
+        }
+        else
+        {
+            a[index] = right[pr];
+            pr++;
+        }
+        index++;
+    }
+
+    for(int i=pl ; i<l_sz ; i++)
+    {
+        a[index] = left[i];
+        index++;
+    }
+
+    for(int i=pr ; i<r_sz ; i++)
+    {
+        a[index] = right[i];
+        index++;
+    }
+    delete[]left;
+    delete[]right;
+}
+
+void merge_sort(int l, int r)
+{
+    if(l==r) return;
+    int mid = (l+r)/2;
+
+    merge_sort( l , mid );
+    merge_sort( mid+1 , r );
+    Merge(l, mid , r);
+}
+
+int main()
+{
+    merge_sort(0,4);
+
+    for(int i=0 ; i<5 ; i++)
+    {
+        cout << a[i] << ' ';
+    }
+}
+
+output:
+=====
+1 2 3 8 9
+

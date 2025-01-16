@@ -1,0 +1,45 @@
+#include<bits/stdc++.h>
+using namespace std;
+int a[5] = {3,9,8,2,1};
+
+int privode(int l , int r)
+{
+    int i = l;
+    int j = l;
+    int p = r;
+
+    while(j<p)
+    {
+        if(a[j]<=a[p])
+        {
+            swap(a[j],a[i]);
+            i++;
+        }
+        j++;
+    }
+
+    if(a[i]>a[p]) swap(a[i],a[p]);
+    p = i;
+    return p;
+}
+
+void quick_sort(int l , int r)
+{
+    if(l>=r) return;
+    int p = privode(l,r);
+    quick_sort(l,p-1);
+    quick_sort(p+1,r);
+}
+
+int main()
+{
+    quick_sort(0,4);
+    for(int i=0 ; i<5 ; i++)
+    {
+        cout << a[i] << ' ';
+    }
+}
+
+output:
+=====
+1 2 3 8 9
