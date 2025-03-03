@@ -1,80 +1,48 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
-int a[5] = {3,9,8,2,1};
 
-int Merge(int l , int mid , int r)
+int arr[1000]={2,100,5,4,9,20,4};
+
+void Merge(int l,int mid,int r)
 {
-    int l_sz = (mid-l)+1;
-    int r_sz = (r-(mid+1))+1;
+    int box[r-l+1];
 
-    int *left = new int[l_sz];
-    int *right = new int[r_sz];
+    int a = l;
+    int b = mid+1;
+    int in = 0;
 
-    for(int i=0 ; i<l_sz ; i++)
+    while(a<=mid and b<=r)
     {
-        left[i]=a[l+i];
+        if(arr[a]<arr[b]) box[in++]=arr[a++];
+        else box[in++]=arr[b++];
     }
 
-    for(int i=0 ; i<r_sz ; i++)
-    {
-        right[i]=a[(mid+1)+i];
-    }
+    while(a<=mid) box[in++]=arr[a++];
 
-    int pl = 0;
-    int pr = 0;
+    while(b<=r) box[in++]=arr[b++];
 
-    int index = l;
-    while(pl<l_sz && pr<r_sz)
-    {
-        if(left[pl]<=right[pr])
-        {
-            a[index] = left[pl];
-            pl++;
-        }
-        else
-        {
-            a[index] = right[pr];
-            pr++;
-        }
-        index++;
-    }
-
-    for(int i=pl ; i<l_sz ; i++)
-    {
-        a[index] = left[i];
-        index++;
-    }
-
-    for(int i=pr ; i<r_sz ; i++)
-    {
-        a[index] = right[i];
-        index++;
-    }
-    delete[]left;
-    delete[]right;
+    for(int i=0 ; i<=(r-l); i++) arr[l+i]=box[i];
 }
 
-void merge_sort(int l, int r)
+void merge_sort(int l,int r)
 {
-    if(l==r) return;
-    int mid = (l+r)/2;
-
-    merge_sort( l , mid );
-    merge_sort( mid+1 , r );
-    Merge(l, mid , r);
+    if(l<r)
+    {
+        int mid = (l+r)/2;
+        merge_sort(l,mid);
+        merge_sort(mid+1,r);
+        Merge(l,mid,r);
+    }
+    else return;
 }
 
 int main()
 {
-    merge_sort(0,4);
-
-    for(int i=0 ; i<5 ; i++)
-    {
-        cout << a[i] << ' ';
-    }
+    int n = 7;
+    merge_sort(0,n-1);
+    for(int i=0 ; i<n ; i++) cout << arr[i] << ' ';
 }
 
 output:
 =====
-1 2 3 8 9
-
+2 4 4 5 9 20 100
